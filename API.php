@@ -3,8 +3,8 @@
 	# PEAR::Flickr_API
 	#
 	# Author: Cal Henderson
-	# Version: $Version$
-	# CVS: $Id: API.php,v 1.1 2005/02/28 22:32:57 cal Exp $
+	# Version: $Revision: 1.2 $
+	# CVS: $Id: API.php,v 1.2 2005/02/28 22:43:41 cal Exp $
 	#
 
 
