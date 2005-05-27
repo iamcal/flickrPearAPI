@@ -3,8 +3,8 @@
 	# PEAR::Flickr_API
 	#
 	# Author: Cal Henderson
-	# Version: $Revision: 1.2 $
-	# CVS: $Id: API.php,v 1.2 2005/02/28 22:43:41 cal Exp $
+	# Version: $Revision: 1.3 $
+	# CVS: $Id: API.php,v 1.3 2005/05/27 17:22:27 cal Exp $
 	#
 
 
@@ -110,7 +110,7 @@
 
 			if ($tree->root->attributes['stat'] == 'fail'){
 
-				$n = $tree->root->children[0]->attributes;
+				$n = $tree->root->children[1]->attributes;
 
 				$this->_err_code = $n['code'];
 				$this->_err_msg = $n['msg'];

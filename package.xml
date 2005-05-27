@@ -13,7 +13,7 @@
 		</maintainer>
 	</maintainers>
 	<release>
-		<version>1.0.0</version>
+		<version>1.3.0</version>
 		<date>2005-02-28</date>
 		<license>PHP License</license>
 		<state>beta</state>
