@@ -3,8 +3,8 @@
 	# PEAR::Flickr_API
 	#
 	# Author: Cal Henderson
-	# Version: $Revision: 1.3 $
-	# CVS: $Id: API.php,v 1.3 2005/05/27 17:22:27 cal Exp $
+	# Version: $Revision: 1.4 $
+	# CVS: $Id: API.php,v 1.4 2005/07/13 17:33:06 calh Exp $
 	#
 
 
@@ -16,6 +16,7 @@
 
 		var $_cfg = array(
 				'api_key'	=> '',
+				'api_secret'	=> '',
 				'endpoint'	=> 'http://www.flickr.com/services/rest/',
 				'conn_timeout'	=> 5,
 				'io_timeout'	=> 5,
@@ -23,6 +24,7 @@
 
 		var $_err_code = 0;
 		var $_err_msg = '';
+		var $tree;
 
 		function Flickr_API($params = array()){
 
@@ -43,6 +45,12 @@
 			$p = $params;
 			$p['method'] = $method;
 			$p['api_key'] = $this->_cfg['api_key'];
+
+			if ($this->_cfg['api_secret']){
+
+				$p['api_sig'] = $this->signArgs($p);
+			}
+
 
 			$p2 = array();
 			foreach($p as $k => $v){
@@ -90,6 +98,8 @@
 			$tree =& new XML_Tree();
 			$tree->getTreeFromString($this->_http_body);
 
+			$this->tree = $tree;
+
 
 			#
 			# check we got an <rsp> element at the root
@@ -110,7 +120,12 @@
 
 			if ($tree->root->attributes['stat'] == 'fail'){
 
-				$n = $tree->root->children[1]->attributes;
+				$n = null;
+				foreach($tree->root->children as $child){
+					if ($child->name == 'err'){
+						$n = $child->attributes;
+					}
+				}
 
 				$this->_err_code = $n['code'];
 				$this->_err_msg = $n['msg'];
@@ -147,6 +162,17 @@
 		function getErrorMessage(){
 			return $this->_err_msg;
 		}
+
+
+		function signArgs($args){
+			ksort($args);
+			$a = '';
+			foreach($args as $k => $v){
+				$a .= $k . $v;
+			}
+			return md5($this->_cfg['api_secret'].$a);
+		}
+
 	}
 
 
