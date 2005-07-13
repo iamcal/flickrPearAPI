@@ -9,7 +9,7 @@ dt { margin-top: 1em; }
 <ul>
 	<li>Install <a href="http://pear.php.net/">PEAR</a>.</li>
 	<li>At the command prompt, type "<code>pear install -of http://code.iamcal.com/php/flickr/Flickr_API-Latest.tgz</code>".</li>
-	<li>If you don't have command line access, then just <a href="http://code.iamcal.com/php/flickr/simple-package.zip">unzip this package</a> into a folder in your include_path.</li>
+	<li>If you don't have command line access, then just <a href="http://code.iamcal.com/php/flickr/simple-package-latest.zip">unzip this package</a> into a folder in your include_path.</li>
 </ul>
 
 <h2>USAGE</h2>
@@ -48,13 +48,19 @@ dt { margin-top: 1em; }
 
 <dl>
 	<dt><code>void Flickr_API(array $params)</code></dt>
-	<dd>The constrcutor takes an optional array of parameters as follows:
+	<dd>The constructor takes an optional array of parameters as follows:
 		<dl>
 			<dt><code>api_key</code></dt>
 			<dd>Your Flickr API key</dd>
 
+			<dt><code>api_secret</code></dt>
+			<dd>The auth secret tied to your API key (only needed for authenticated calls)</dd>
+
 			<dt><code>endpoint</code></dt>
 			<dd>The Flickr REST endpoint (a sensible default is used when you don't specify one)</dd>
+
+			<dt><code>auth_endpoint</code></dt>
+			<dd>The Flickr Auth endpoint (a sensible default is used when you don't specify one)</dd>
 
 			<dt><code>conn_timeout</code></dt>
 			<dd>HTTP connection timeout in seconds (defaults to 5)</dd>
@@ -72,4 +78,7 @@ dt { margin-top: 1em; }
 
 	<dt><code>string getErrorMessage()</code></dt>
 	<dd>Returns the error message for the last method call.</dd>
+
+	<dt><code>string getAuthUrl(string $perms, string $frob='')</code></dt>
+	<dd>Returns a signed url to direct an authenticating user to. A frob only needs to be passed for non-web applications.</dd>
 </dl>

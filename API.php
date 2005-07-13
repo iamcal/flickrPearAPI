@@ -3,8 +3,8 @@
 	# PEAR::Flickr_API
 	#
 	# Author: Cal Henderson
-	# Version: $Revision: 1.4 $
-	# CVS: $Id: API.php,v 1.4 2005/07/13 17:33:06 calh Exp $
+	# Version: $Revision: 1.5 $
+	# CVS: $Id: API.php,v 1.5 2005/07/13 17:47:55 calh Exp $
 	#
 
 
@@ -18,6 +18,7 @@
 				'api_key'	=> '',
 				'api_secret'	=> '',
 				'endpoint'	=> 'http://www.flickr.com/services/rest/',
+				'auth_endpoint'	=> 'http://www.flickr.com/services/auth/?',
 				'conn_timeout'	=> 5,
 				'io_timeout'	=> 5,
 			);
@@ -163,6 +164,27 @@
 			return $this->_err_msg;
 		}
 
+		function getAuthUrl($perms, $frob=''){
+
+			$args = array(
+				'api_key'	=> $GLOBALS[api_key],
+				'frob'		=> $frob,
+				'perms'		=> $perms,
+			);
+
+			$args[api_sig] = $this->signArgs($args);
+
+			#
+			# build the url params
+			#
+
+			$pairs =  array();
+			foreach($args as $k => $v){
+				$pairs[] = urlencode($k).'='.urlencode($v);
+			}
+
+			return $this->_cfg['auth_endpoint'].implode('&', $pairs);
+		}
 
 		function signArgs($args){
 			ksort($args);
