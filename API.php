@@ -3,8 +3,8 @@
 	# PEAR::Flickr_API
 	#
 	# Author: Cal Henderson
-	# Version: $Revision: 1.5 $
-	# CVS: $Id: API.php,v 1.5 2005/07/13 17:47:55 calh Exp $
+	# Version: $Revision: 1.6 $
+	# CVS: $Id: API.php,v 1.6 2005/07/25 18:22:13 cal Exp $
 	#
 
 
@@ -167,12 +167,13 @@
 		function getAuthUrl($perms, $frob=''){
 
 			$args = array(
-				'api_key'	=> $GLOBALS[api_key],
-				'frob'		=> $frob,
+				'api_key'	=> $this->_cfg['api_key'],
 				'perms'		=> $perms,
 			);
 
-			$args[api_sig] = $this->signArgs($args);
+			if (strlen($frob)){ $args['frob'] = $frob; }
+
+			$args['api_sig'] = $this->signArgs($args);
 
 			#
 			# build the url params
